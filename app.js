@@ -6,17 +6,6 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours-simple.json`))
 const app = express();
 
 
-// app.get('/', (req, res) => {
-//     res.status(200)
-//     .json({message:'Hell from the server', 
-//            app:'Tour'})
-// });
-
-// app.post('/', (req, res) =>{
-
-//     res.status(200).json({message:"You can post with this endpoint"});
-// })
-
 app.get('/api/v1/tours', (req, res) => {
 
     res.status(200)
