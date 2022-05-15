@@ -79,7 +79,7 @@ exports.getTour = (req, res) => {
     res.status(500)
     .json({
      status:'failed',
-     massage:'deleteApi still in progress'
+     massage:'deleteApi still on progress '
     })
  }
 

@@ -1,9 +1,7 @@
 const express =  require('express');
 const fs = require('fs');
 const morgan = require('morgan');
-const tourController = require('./controller/tourController');
-
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours-simple.json`));
+const tourRouter = require('./routers/tourRouter');
 
 const app = express();
 
@@ -21,26 +19,7 @@ app.use((req, res, next) => {
     next();
 })
 
-
- const tourRouter = express.Router();
-
  app.use('/api/v1/tours', tourRouter)
 
- tourRouter.route('/').get(tourController.getAllTours).post(tourController.addTour);
+module.exports = app;
 
- tourRouter.route('/:id').get(tourController.getTour).patch(tourController.updateTour).delete(tourController.deleteTour);
-
-
-// app.get('/api/v1/tours', getAllTours);
-
-// app.post('/api/v1/tours', addTour);
-
-//app.get(`/api/v1/tours/:id`, getTour)
-
-const port = 3000;
-
-app.listen(port, ()=> {
-
-    console.log(`App running on port ${port}....`);
-
-});
