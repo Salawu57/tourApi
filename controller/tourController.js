@@ -1,28 +1,8 @@
-const express =  require('express');
 const fs = require('fs');
-const morgan = require('morgan');
-
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours-simple.json`));
-
-const app = express();
-
-app.use(express.json());
-
-app.use(morgan('dev'));
-
-app.use((req, res, next)=>{
-   console.log("this is a middleware call 😀")
-    next();
-})
-
-app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
-    next();
-})
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/../data/tours-simple.json`))
 
 
-
-const getAllTours = (req, res) => {
+exports.getAllTours = (req, res) => {
 
     res.status(200)
     .json({
@@ -33,7 +13,7 @@ const getAllTours = (req, res) => {
     })
 }
 
-const getTour = (req, res) => {
+exports.getTour = (req, res) => {
     
 
     const id  = Number(req.params.id);
@@ -67,7 +47,7 @@ const getTour = (req, res) => {
          
     })
 }
-const addTour =  (req, res) => {
+ exports.addTour =  (req, res) => {
 
     const tourID = tours[tours.length - 1].id+1;
     
@@ -86,7 +66,7 @@ const addTour =  (req, res) => {
     })
  }
 
- const updateTour = (req, res) => {
+ exports.updateTour = (req, res) => {
 
     res.status(500)
     .json({
@@ -95,7 +75,7 @@ const addTour =  (req, res) => {
     })
  }
 
- const deleteTour = (req, res) => {
+ exports.deleteTour = (req, res) => {
     res.status(500)
     .json({
      status:'failed',
@@ -103,25 +83,5 @@ const addTour =  (req, res) => {
     })
  }
 
- const tourRouter = express.Router();
 
- app.use('/api/v1/tours', tourRouter)
-
- tourRouter.route('/').get(getAllTours).post(addTour);
-
- tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
-
-
-// app.get('/api/v1/tours', getAllTours);
-
-// app.post('/api/v1/tours', addTour);
-
-//app.get(`/api/v1/tours/:id`, getTour)
-
-const port = 3000;
-
-app.listen(port, ()=> {
-
-    console.log(`App running on port ${port}....`);
-
-});
+ 
